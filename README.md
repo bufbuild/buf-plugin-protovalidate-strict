@@ -7,7 +7,7 @@ An experimental [Buf check plugin](https://buf.build/docs/cli/buf-plugins) for [
 
 This plugin only allows Protovalidate annotations to be added to new fields.
 
-This guarantees safety in Protovalidate annotation evolution via the strictest means possible. Generally, this level of strictness is not requires and is not even desirable.
+This guarantees safety in Protovalidate annotation evolution via the strictest means possible. Generally, this level of strictness is not required and is not even desirable.
 
 The single rule `PROTOVALIDATE_STRICT` must be added to `buf.yaml` to enable this check:
 
@@ -15,7 +15,7 @@ The single rule `PROTOVALIDATE_STRICT` must be added to `buf.yaml` to enable thi
 version: v2
 breaking:
   use:
-    - STANDARD # Or whatever your existing rules are
+    - FILE # Or whatever your existing rules are
     - PROTOVALIDATE_STRICT
 plugins:
   - plugin: buf-plugin-protovalidate-strict
@@ -27,7 +27,7 @@ Then, install this plugin locally:
 go install github.com/bufbuild/buf-plugin-protovalidate-strict@latest
 ```
 
-You can also [publish this plugin to your enterprise BSR instance]((https://buf.build/docs/cli/buf-plugins/publish) and use it without installing it locally.
+You can also [publish this plugin to your enterprise BSR instance](https://buf.build/docs/cli/buf-plugins/publish) and use it without installing it locally.
 
 ## Status: Alpha
 
