@@ -2,3 +2,5 @@
 *.pprof
 *.svg
 cover.out
+
+/protoc-gen-protovalidate-strict
