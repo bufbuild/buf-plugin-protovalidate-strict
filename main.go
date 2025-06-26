@@ -19,7 +19,7 @@ func main() {
 				{
 					ID:      "PROTOVALIDATE_STRICT",
 					Default: true,
-					Purpose: "Checks that Protovaldiate annotations on all existing messages and fields are unchanged.",
+					Purpose: "Checks that Protovalidate annotations on all existing messages and fields are unchanged.",
 					Type:    check.RuleTypeBreaking,
 					Handler: checkutil.NewFilePairRuleHandler(handleProtovalidateStrict),
 				},
@@ -113,7 +113,7 @@ func compareProtovalidateFieldRules(
 			return err
 		}
 		if cmp.Diff(fieldRules, againstFieldRules, protocmp.Transform()) != "" {
-			// Note: same thing as above.
+			// Note: this has the same source location limitation as message rules above.
 			responseWriter.AddAnnotation(
 				check.WithMessagef(
 					"Protovalidate field rules on field %q have changed.",
