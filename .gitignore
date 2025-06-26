@@ -3,4 +3,4 @@
 *.svg
 cover.out
 
-/protoc-gen-protovalidate-strict
+/buf-plugin-protovalidate-strict
