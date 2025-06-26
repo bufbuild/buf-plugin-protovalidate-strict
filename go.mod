@@ -1,4 +1,4 @@
-module github.com/bufbuild/buf-plugin-pv-strict
+module github.com/bufbuild/buf-plugin-protovalidate-strict
 
 go 1.24.4
 

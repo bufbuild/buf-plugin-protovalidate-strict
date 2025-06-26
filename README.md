@@ -1,46 +1,38 @@
-# buf-plugin-pv-strict
+# buf-plugin-protovalidate-strict
 
-A [Buf check plugin](https://buf.build/docs/cli/buf-plugins/) for strictly enforcing consistency
-in Protovalidate annotations.
+An experimental [Buf check plugin](https://buf.build/docs/cli/buf-plugins) for [Protovalidate](https://buf.build/docs/protovalidate) that enforces:
 
-The rule `PROTOVALIDATE_STRICT` expects that Protovalidate annotations on existing messages
-and fields are not mutated in any way: annotations cannot be added, removed, or adjusted.
+- Protovalidate annotations are not added to existing fields without Protovalidate annotations.
+- Existing Protovalidate annotations are never modified or removed.
 
-New messages and fields are not subject to validation (only existing ones are checked for changes). This results in the following behavior:
-- Messages are checked by name, so if the name of a message has changed, then it is treated
-  as a new message
-- Fields are checked by field number, so if field numbers have shifted, then this could affect
-  check results.
+This plugin only allows Protovalidate annotations to be added to new fields.
 
-To enforce message and field consistency, use [existing Buf breaking change detection rules](https://buf.build/docs/breaking/rules/).
+This guarantees safety in Protovalidate annotation evolution via the strictest means possible. Generally, this level of strictness is not requires and is not even desirable.
 
-## Usage
-
-### Running the check plugin locally
-
-Build and install the plugin binary to your `$PATH`:
-
-```
-$ go install github.com/bufbuild/buf-plugin-pv-strict@latest
-```
-
-Configure the plugin in your module's `buf.yaml`:
+The single rule `PROTOVALIDATE_STRICT` must be added to `buf.yaml` to enable this check:
 
 ```
 version: v2
 breaking:
   use:
+    - STANDARD # Or whatever your existing rules are
     - PROTOVALIDATE_STRICT
 plugins:
-  - plugin: "buf-plugin-pv-strict"
+  - plugin: buf-plugin-protovalidate-strict
 ```
 
-To use this plugin remotely through the BSR, follow [the instructions for publishing plugins to the BSR](https://buf.build/docs/cli/buf-plugins/publish/).
+Then, install this plugin locally:
 
-## Status: Dev
+```bash
+go install github.com/bufbuild/buf-plugin-protovalidate-strict@latest
+```
 
-buf-plugin-pv-strict is currently under development and distributed for testing purposes.
+You can also [publish this plugin to your enterprise BSR instance]((https://buf.build/docs/cli/buf-plugins/publish) and use it without installing it locally.
+
+## Status: Alpha
+
+buf-plugin-protovalidate-strict is an experimental plugin and is in active development. It may be changed or archived without notice.
 
 ## Legal
 
-Offered under the [Apache 2 license](https://github.com/bufbuild/buf-plugin-pv-strict/blob/main/LICENSE).
+Offered under the [Apache 2 license](https://github.com/bufbuild/buf-plugin-protovalidate-strict/blob/main/LICENSE).
