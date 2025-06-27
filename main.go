@@ -33,7 +33,7 @@ func main() {
 				{
 					ID:      "PROTOVALIDATE_STRICT",
 					Default: true,
-					Purpose: "Checks that Protovalidate annotations on all existing messages and fields are unchanged.",
+					Purpose: "Checks that Protovalidate annotations on messages and fields adhere to strict changement.",
 					Type:    check.RuleTypeBreaking,
 					Handler: checkutil.NewFilePairRuleHandler(handleProtovalidateStrict),
 				},
@@ -116,13 +116,24 @@ func compareProtovalidateFieldRules(
 ) error {
 	for i := range fields.Len() {
 		field := fields.Get(i)
-		againstField := againstFields.ByNumber(field.Number())
-		if againstField == nil {
-			continue
-		}
 		fieldRules, err := protovalidate.ResolveFieldRules(field)
 		if err != nil {
 			return err
+		}
+		againstField := againstFields.ByNumber(field.Number())
+		if againstField == nil {
+			// Check that new fields do not contain `required` constraints
+			if fieldRules.GetRequired() {
+				// Note: this has the same source location limitation as message rules above.
+				responseWriter.AddAnnotation(
+					check.WithMessagef(
+						`New field %q must not have Protovalidate "required" set`,
+						field.FullName(),
+					),
+					check.WithDescriptor(field),
+				)
+			}
+			continue
 		}
 		againstFieldRules, err := protovalidate.ResolveFieldRules(againstField)
 		if err != nil {
