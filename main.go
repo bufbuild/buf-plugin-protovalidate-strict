@@ -33,7 +33,7 @@ func main() {
 				{
 					ID:      "PROTOVALIDATE_STRICT",
 					Default: true,
-					Purpose: "Checks that Protovalidate annotations on messages and fields adhere to strict changement.",
+					Purpose: "Checks that Protovalidate annotations on messages and fields adhere to strict change management.",
 					Type:    check.RuleTypeBreaking,
 					Handler: checkutil.NewFilePairRuleHandler(handleProtovalidateStrict),
 				},
