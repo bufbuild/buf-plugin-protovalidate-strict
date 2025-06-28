@@ -2,8 +2,9 @@
 
 An experimental [Buf check plugin](https://buf.build/docs/cli/buf-plugins) for [Protovalidate](https://buf.build/docs/protovalidate) that enforces:
 
-- Protovalidate annotations are not added to existing fields without Protovalidate annotations.
+- Protovalidate annotations are not added to existing fields and messages without Protovalidate annotations.
 - Existing Protovalidate annotations are never modified or removed.
+- New fields on existing messages do not get added with [`required`](https://buf.build/docs/reference/protovalidate/rules/field_rules/#required).
 
 This plugin only allows Protovalidate annotations to be added to new fields.
 
